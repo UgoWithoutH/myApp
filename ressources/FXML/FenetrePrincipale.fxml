@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="view.FenetrePrincipale"
+           style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" alignment="CENTER">
+
+    <HBox spacing="50"
+          prefHeight="200"
+          prefWidth="600"
+          alignment="CENTER">
+        <VBox alignment="CENTER"
+              spacing="50">
+            <HBox spacing="10">
+                <Label text="score : "/>
+                <Label fx:id="scoreValueJ1"/>
+            </HBox>
+            <Button fx:id="buttonj1" text="Play" onAction="#PlayJ1"/>
+        </VBox>
+
+        <VBox alignment="CENTER"
+        spacing="50">
+            <HBox spacing="10">
+                <Label text="score : "/>
+                <Label fx:id="scoreValueJ2"/>
+            </HBox>
+            <Button fx:id="buttonj2" text="Play" onAction="#PlayJ2"/>
+        </VBox>
+    </HBox>
+    <Button fx:id="restartButton" text="restart" onAction="#restart" alignment="CENTER"/>
+
+</VBox>
