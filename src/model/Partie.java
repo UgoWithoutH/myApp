@@ -1,7 +1,9 @@
 package model;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,17 +19,20 @@ public class Partie {
     public final BooleanProperty gameOverProperty(){ return gameOver; }
 
     private List<Joueur> joueurs = new ArrayList<>();
-    private Joueur joueurCourant;
+    private ObjectProperty<Joueur> joueurCourant = new SimpleObjectProperty();
+        public Joueur getJoueurCourant() {return joueurCourant.get();}
+        public ObjectProperty<Joueur> joueurCourantProperty() {return joueurCourant;}
+        public void setJoueurCourant(Joueur joueurCourant) {this.joueurCourant.set(joueurCourant);}
 
     public Partie(int num) {
         int cpt=0;
 
         while(cpt != num){
-            joueurs.add(new Joueur());
+            joueurs.add(new Joueur(cpt+1));
             cpt++;
         }
 
-        joueurCourant = joueurs.get(0);
+        setJoueurCourant(joueurs.get(0));
     }
 
 
@@ -40,14 +45,12 @@ public class Partie {
         return joueurs.get(num - 1);
     }
 
-    public void lancer_de(int num){
+    public void lancer_de(){
         if(isGameOver()) {
             return;
         }
 
-        if(num - 1 != joueurs.indexOf(joueurCourant)) return;
-
-        if(!joueurCourant.lancer_de()){
+        if(!getJoueurCourant().lancer_de()){
             setGameOver(true);
             return;
         }
@@ -56,12 +59,12 @@ public class Partie {
     }
 
     private void changeCurrentPlayer(){
-            int indexCurrentPlayer = joueurs.indexOf(joueurCourant);
+            int indexCurrentPlayer = joueurs.indexOf(getJoueurCourant());
 
             if(indexCurrentPlayer == joueurs.size() - 1){
-                joueurCourant = joueurs.get(0);
+                setJoueurCourant(joueurs.get(0));
             }else{
-                joueurCourant = joueurs.get(indexCurrentPlayer+1);
+                setJoueurCourant(joueurs.get(indexCurrentPlayer+1));
             }
     }
 
@@ -69,9 +72,7 @@ public class Partie {
         for(Joueur joueur : joueurs){
             joueur.setScore(0);
         }
-
-        joueurCourant = joueurs.get(0);
-
+        setJoueurCourant(joueurs.get(0));
         setGameOver(false);
     }
 }

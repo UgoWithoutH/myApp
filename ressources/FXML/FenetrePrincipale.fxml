@@ -3,31 +3,62 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="view.FenetrePrincipale"
-           style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" alignment="CENTER">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="view.FenetrePrincipale" alignment="CENTER">
 
     <HBox spacing="50"
-          prefHeight="200"
+          prefHeight="500"
           prefWidth="600"
           alignment="CENTER">
-        <VBox alignment="CENTER"
-              spacing="50">
-            <HBox spacing="10">
-                <Label text="score : "/>
-                <Label fx:id="scoreValueJ1"/>
-            </HBox>
-            <Button fx:id="buttonj1" text="Play" onAction="#PlayJ1"/>
+
+        <VBox alignment="CENTER">
+            <ImageView
+                    fitHeight="50"
+                    fitWidth="50"
+                    fx:id="imageJ1"
+            >
+                <Image
+                        url="/images/fleche.png"
+
+                />
+            </ImageView>
+            <VBox alignment="CENTER"
+                  spacing="50" fx:id="box1">
+                <TextField fx:id="textfieldJ1"/>
+                <HBox spacing="10">
+                    <Label text="score : "/>
+                    <Label fx:id="scoreValueJ1"/>
+                </HBox>
+            </VBox>
         </VBox>
 
-        <VBox alignment="CENTER"
-        spacing="50">
-            <HBox spacing="10">
-                <Label text="score : "/>
-                <Label fx:id="scoreValueJ2"/>
-            </HBox>
-            <Button fx:id="buttonj2" text="Play" onAction="#PlayJ2"/>
+        <VBox alignment="CENTER" spacing="20">
+        <Button fx:id="buttonPlay" onAction="#Play" text="Play"/>
+        <Button fx:id="restartButton" text="restart" onAction="#restart"/>
+        </VBox>
+
+        <VBox alignment="CENTER">
+            <ImageView
+                    fitHeight="50"
+                    fitWidth="50"
+                    fx:id="imageJ2"
+            >
+                <Image
+                        url="/images/fleche.png"
+
+                />
+            </ImageView>
+            <VBox alignment="CENTER"
+                  spacing="50" fx:id="box2">
+                <TextField fx:id="textfieldJ2"/>
+                <HBox spacing="10">
+                    <Label text="score : "/>
+                    <Label fx:id="scoreValueJ2"/>
+                </HBox>
+            </VBox>
         </VBox>
     </HBox>
-    <Button fx:id="restartButton" text="restart" onAction="#restart" alignment="CENTER"/>
+
 
 </VBox>
