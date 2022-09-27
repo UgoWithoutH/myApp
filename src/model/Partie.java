@@ -35,8 +35,6 @@ public class Partie {
         setJoueurCourant(joueurs.get(0));
     }
 
-
-
     public List<Joueur> getJoueurs() {
         return Collections.unmodifiableList(joueurs);
     }
@@ -69,7 +67,13 @@ public class Partie {
     }
 
     public void restart(){
+    int index = 0;
+
         for(Joueur joueur : joueurs){
+            if(getJoueurCourant() != joueur){
+                index++;
+                joueur.ajouterScore(joueur.getScore());
+            }
             joueur.setScore(0);
         }
         setJoueurCourant(joueurs.get(0));

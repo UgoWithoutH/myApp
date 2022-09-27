@@ -1,16 +1,12 @@
 package model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class Joueur {
-
-    private static final Random RANDOM_GENERATOR = new Random();
     public final String DEFAULT_NAME = "Joueur";
     private IntegerProperty score = new SimpleIntegerProperty(0);
         public final int getScore(){ return score.get(); }
@@ -21,14 +17,29 @@ public class Joueur {
         public String getName() {return name.get();}
         public StringProperty nameProperty() {return name;}
         public void setName(String name) {this.name.set(name);}
+    private ObservableList<Score> observableScores = FXCollections.observableArrayList();
+    private ListProperty<Score> scores = new SimpleListProperty<>(observableScores);
+        public ObservableList<Score> getScores() {return scores.get();}
+        public ListProperty<Score> scoresProperty() {return scores;}
+        public void setScores(ObservableList<Score> scores) {this.scores.set(scores);}
+
+    private De de = new De();
 
     public Joueur(int num){
         setName(DEFAULT_NAME+num);
     }
 
     public boolean lancer_de(){
-        setScore(RANDOM_GENERATOR.nextInt(7));
-        return getScore() != Partie.GAME_OVER_CODE;
+        setScore(de.lancer() + getScore());
+        return de.getScoreVal() != Partie.GAME_OVER_CODE;
+    }
+
+    public De getDe() {
+        return de;
+    }
+
+    public void ajouterScore(long valScore){
+        observableScores.add(new Score(valScore));
     }
 
     @Override

@@ -5,57 +5,48 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import model.Partie;
+import model.Score;
+
+import java.io.IOException;
+import java.util.List;
 
 public class FenetrePrincipale {
 
     @FXML
-    private Label scoreValueJ1;
-    @FXML
-    private Label scoreValueJ2;
-    @FXML
-    private Button buttonPlay;
-    @FXML
     private Button restartButton;
     @FXML
-    private VBox box1;
+    private VBox root;
     @FXML
-    private VBox box2;
-    @FXML
-    private ImageView imageJ1;
-    @FXML
-    private ImageView imageJ2;
-    @FXML
-    private TextField textfieldJ1;
-    @FXML
-    private TextField textfieldJ2;
+    private HBox myHbox;
     private Partie partie;
+    private Stage stage;
 
-    public void initialize(){
+    public FenetrePrincipale(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void initialize() throws IOException {
         partie = new Partie(2);
 
-        scoreValueJ1.textProperty().bindBidirectional(partie.getJoueur(1).scoreProperty(), new NumberStringConverter());
-        scoreValueJ2.textProperty().bindBidirectional(partie.getJoueur(2).scoreProperty(), new NumberStringConverter());
         restartButton.visibleProperty().bind(partie.gameOverProperty());
 
-        Border border = new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(3)));
+        myHbox.getChildren().add(0, new JoueurUserControl(partie.joueurCourantProperty(), partie.getJoueur(1)));
+        myHbox.getChildren().add(new JoueurUserControl(partie.joueurCourantProperty(), partie.getJoueur(2)));
 
-        box1.setPadding(new Insets(20));
-        box2.setPadding(new Insets(20));
+        bindSize();
+    }
 
-        box1.setBorder(border);
-        box2.setBorder(border);
-
-        textfieldJ1.textProperty().bindBidirectional(partie.getJoueur(1).nameProperty());
-        textfieldJ2.textProperty().bindBidirectional(partie.getJoueur(2).nameProperty());
-
-        imageJ1.visibleProperty().bind(partie.joueurCourantProperty().isEqualTo(partie.getJoueur(1)));
-        imageJ2.visibleProperty().bind(partie.joueurCourantProperty().isEqualTo(partie.getJoueur(2)));
+    private void bindSize(){
+        root.prefWidthProperty().bind(stage.widthProperty());
+        root.prefHeightProperty().bind(stage.heightProperty());
     }
 
     public void restart() {
